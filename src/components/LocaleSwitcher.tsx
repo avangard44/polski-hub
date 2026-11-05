@@ -62,6 +62,11 @@ export function LocaleSwitcher() {
 
   const selectLocale = (nextLocale: (typeof routing.locales)[number]) => {
     setOpen(false);
+    try {
+      localStorage.setItem('polski-hub-locale-chosen', nextLocale);
+    } catch {
+      // ignore
+    }
     startTransition(() => router.replace(pathname, { locale: nextLocale }));
   };
 

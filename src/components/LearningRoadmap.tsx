@@ -9,6 +9,7 @@ import { CASE_META } from '@/lib/cases';
 import type { CurriculumCEFR, ModuleCategory } from '@/types/curriculum';
 import type { UILocale } from '@/types/grammar';
 import { OnboardingPlacementModal } from './OnboardingPlacementModal';
+import { WelcomeLanding } from './WelcomeLanding';
 
 const CEFR_ORDER: CurriculumCEFR[] = ['A1', 'A2', 'B1', 'B2'];
 
@@ -33,6 +34,7 @@ export function LearningRoadmap() {
   const {
     state,
     hydrated,
+    user,
     getModuleStatus,
     activeModule,
     openPlacementModal,
@@ -40,6 +42,8 @@ export function LearningRoadmap() {
   } = useLearningProgress();
 
   const [selectedCefr, setSelectedCefr] = useState<CurriculumCEFR | 'ALL'>('ALL');
+  const [hasDismissedWelcome, setHasDismissedWelcome] = useState(false);
+  const [showAboutView, setShowAboutView] = useState(false);
 
   const totalModules = CURRICULUM_MODULES.length;
   const completedCount = Object.keys(state.completedModules).length;
@@ -47,9 +51,26 @@ export function LearningRoadmap() {
 
   const visibleLevels = selectedCefr === 'ALL' ? CEFR_ORDER : [selectedCefr];
 
+  const shouldShowWelcome =
+    showAboutView || (hydrated && !user && !state.hasCompletedOnboarding && !hasDismissedWelcome);
+
+  if (shouldShowWelcome) {
+    return (
+      <>
+        <OnboardingPlacementModal />
+        <WelcomeLanding
+          onStartComplete={() => {
+            setHasDismissedWelcome(true);
+            setShowAboutView(false);
+          }}
+        />
+      </>
+    );
+  }
+
   return (
     <div>
-      <OnboardingPlacementModal autoOpenOnFirstVisit />
+      <OnboardingPlacementModal />
 
       {/* Top Hero & Progress Dashboard */}
       <section className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
@@ -77,6 +98,15 @@ export function LearningRoadmap() {
 
             {/* Stats & Placement Action Buttons */}
             <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                onClick={() => setShowAboutView(true)}
+                className="inline-flex items-center gap-1.5 rounded-2xl bg-white px-3.5 py-2.5 text-xs font-bold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-50 sm:text-sm"
+              >
+                <span>ℹ️</span>
+                <span>{t('aboutSiteBtn')}</span>
+              </button>
+
               <button
                 type="button"
                 onClick={openPlacementModal}
