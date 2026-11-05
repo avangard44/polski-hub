@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SiteHeader } from '@/components/SiteHeader';
+import { LearningProgressProvider } from '@/context/LearningProgressContext';
 import { routing } from '@/i18n/routing';
 import '../globals.css';
 
@@ -50,8 +51,10 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body className="min-h-screen transition-colors">
         <NextIntlClientProvider>
-          <SiteHeader />
-          <main className="mx-auto max-w-6xl px-3 pb-24 pt-5 sm:px-4 sm:py-8">{children}</main>
+          <LearningProgressProvider>
+            <SiteHeader />
+            <main className="mx-auto max-w-6xl px-3 pb-24 pt-5 sm:px-4 sm:py-8">{children}</main>
+          </LearningProgressProvider>
         </NextIntlClientProvider>
       </body>
     </html>

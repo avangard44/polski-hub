@@ -6,6 +6,7 @@ import { MobileBottomNav } from './MobileBottomNav';
 export async function SiteHeader() {
   const t = await getTranslations('nav');
   const links = [
+    { href: '/learn', label: t('roadmap') },
     { href: '/cases', label: t('cases') },
     { href: '/verbs', label: t('verbs') },
     { href: '/vocabulary', label: t('vocabulary') },

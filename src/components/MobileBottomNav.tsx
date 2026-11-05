@@ -9,12 +9,12 @@ export function MobileBottomNav() {
 
   const items = [
     {
-      href: '/' as const,
-      label: t('home'),
-      active: pathname === '/',
+      href: '/learn' as const,
+      label: t('roadmap'),
+      active: pathname === '/' || pathname.startsWith('/learn'),
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       ),
     },

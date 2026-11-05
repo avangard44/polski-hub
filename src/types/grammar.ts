@@ -150,3 +150,6 @@ export interface VocabWord {
   frequencyRank?: number;
   audioUrl?: string;
 }
+
+export * from './curriculum';
+
