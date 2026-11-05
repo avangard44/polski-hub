@@ -2,7 +2,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { CompletedModuleRecord, SubLevel, UserLearningState } from '@/types/curriculum';
 import type { UILocale } from '@/types/grammar';
 
-const DEFAULT_SUPABASE_URL = 'https://qmujgrmwsvvkpnifgfh.supabase.co';
+const DEFAULT_SUPABASE_URL = 'https://qmujgprmwsvvkpnifgfh.supabase.co';
 const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_OrBI6ml303wDwA7YvKbxkg_NsZdgRJj';
 
 const rawUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? DEFAULT_SUPABASE_URL).trim();

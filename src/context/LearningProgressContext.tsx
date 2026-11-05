@@ -350,7 +350,8 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
               password,
             });
             if (error) {
-              if (!error.message.toLowerCase().includes('fetch')) {
+              const msg = error.message.toLowerCase();
+              if (!msg.includes('fetch') && !msg.includes('email not confirmed')) {
                 return { error: error.message };
               }
             } else if (data.user) {
