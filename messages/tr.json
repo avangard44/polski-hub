@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "Polski Hub — Lehçeyi bağlam içinde dilbilgisiyle öğrenin",
+    "description": "Lehçe hâller, fiil yönetimi, görünüş çiftleri ve konulara göre kelimeler – Türkçe konuşanlar için açıklamalarla."
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "cases": "Hâller",
+    "verbs": "Fiiller",
+    "vocabulary": "Kelimeler",
+    "language": "Arayüz dili",
+    "settings": "Tema ve Dil",
+    "theme": "Görünüm",
+    "light": "Açık",
+    "dark": "Koyu"
+  },
+  "home": {
+    "title": "Lehçeyi kendi dilinizin mantığıyla öğrenin",
+    "subtitle": "Her açıklama Lehçeyi Türkçeyle karşılaştırır: nerede aynı, nerede farklı ve Türkçe konuşanlar genellikle hangi hataları yapıyor.",
+    "start": "Aç",
+    "cases": { "title": "Hâller ve Dilbilgisi", "desc": "7 hâlin tamamı, cinsiyetlere göre ek değişimleri, edatlar ve en sık kalıplar." },
+    "verbs": { "title": "Bağlam içinde fiiller", "desc": "Hâl yönetimi, görünüş çiftleri, çekimler ve gerçek örnekler." },
+    "vocabulary": { "title": "Konulara göre sık kelimeler", "desc": "Konulara göre en sık kelimeler: kartlar ve telaffuz." }
+  },
+  "cases": {
+    "title": "Lehçe Hâller ve Dilbilgisi Rehberi",
+    "intro": "İsim ve sıfatların Yalın hâlden (Mianownik) diğer hâllere eril, dişil, nötr ve çoğulda nasıl geçtiğini, hangi edatlarla kullanıldığını ve en sık cümle kalıplarını incelemek için bir hâl seçin.",
+    "yourLanguage": "Türkçe ile karşılaştırma",
+    "whenToUse": "Bu hâl ne zaman kullanılır?",
+    "prepositions": "Temel edatlar",
+    "noPrepositions": "Edatsız kullanılır",
+    "declensionTitle": "Kelimeler nasıl değişir? (Mianownik → Hedef Hâl)",
+    "genderCol": "Cinsiyet / Sayı",
+    "nomCol": "Yalın Hâl (Mianownik)",
+    "targetCol": "Bu hâldeki biçimi",
+    "endingsCol": "Ek kuralı ve örnek",
+    "alternations": "Kök ünsüz değişimleri",
+    "commonPhrases": "En sık kullanılan ifadeler ve kalıplar",
+    "exploreVerbs": "Fiil sözlüğüne git →"
+  },
+  "verbs": {
+    "title": "Bağlam içinde fiiller",
+    "intro": "Fiilin nasıl çekimlendiğini, istediği hâlde eril, dişil, nötr ve çoğul kelimelerin nasıl değiştiğini ve en sık kullanılan kalıpları görmek için herhangi bir fiile tıklayın.",
+    "searchPlaceholder": "Ara: szukać, szukac, beklemek…",
+    "allCases": "Tüm hâller",
+    "noResults": "Fiil bulunamadı.",
+    "count": "{count, plural, other {# fiil}}"
+  },
+  "verb": {
+    "back": "Tüm fiiller",
+    "imperfective": "Bitmemişlik (imperfektif)",
+    "perfective": "Bitmişlik (perfektif)",
+    "noPerfective": "Perfektif eşi yok",
+    "government": "Hâl yönetimi (rekcja)",
+    "governmentHint": "Örneklerde vurgulamak için bir hâlin üzerine gelin. Kalıbı değiştirmek için bir bağlantıya tıklayın.",
+    "nativeLens": "Türkçe ile karşılaştırma",
+    "level": {
+      "match": "Türkçedeki gibi",
+      "partial": "Kısmen farklı",
+      "mismatch": "Farklı — dikkat!"
+    },
+    "examples": "Örnekler",
+    "negate": "Olumsuz yap (nie)",
+    "negationShift": "Olumsuzluk genitifi: “nie”den sonra doğrudan nesne Biernik'ten Dopełniacz'a geçer.",
+    "negationUnchanged": "Olumsuzluk burada hâli değiştirmez.",
+    "translations": "Çeviriler",
+    "conjugation": "Çekim",
+    "present": "Şimdiki zaman",
+    "future": "Gelecek zaman",
+    "past": "Geçmiş zaman",
+    "imperative": "Emir kipi",
+    "masculine": "eril / erkek-kişi",
+    "feminine": "dişil / diğer",
+    "aspectUsage": "Bağlamda görünüş",
+    "listen": "Dinle",
+    "otherCase": "bu fiil tarafından yönetilmiyor",
+    "caseGrammarTitle": "Bu fiilden sonra isimler ve sıfatlar nasıl değişir?",
+    "caseGrammarSub": "Mianownik (Yalın hâl) → {caseName} (cinsiyetlere göre)",
+    "openFullCaseGuide": "Tam {caseName} dilbilgisi rehberi →",
+    "verbConstructionsTitle": "Fiil nasıl değişir ve temel cümle kalıpları",
+    "constructions": {
+      "now": "Şu an / düzenli (ben)",
+      "pastM": "Geçmiş (erkek — ja)",
+      "pastF": "Geçmiş (kadın — ja)",
+      "future": "Gelecek / sonuç (ben)",
+      "imperative": "Emir / rica",
+      "modal": "Yardımcı fiillerle (chcę / muszę / można)"
+    },
+    "casePhrasesTitle": "{caseName} hâlinde sık kullanılan ifadeler"
+  },
+  "vocab": {
+    "title": "Konulara göre sık kelimeler",
+    "intro": "Konulara göre gruplanmış en sık kelimeler. Çeviriyi ve örneği görmek için kartı çevirin.",
+    "topics": { "daily": "Günlük hayat", "university": "Üniversite", "work": "İş", "travel": "Seyahat" },
+    "cards": "Kartlar",
+    "list": "Liste",
+    "flip": "Çevirmek için dokunun",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "falseFriend": "Yalancı eşdeğer"
+  }
+}

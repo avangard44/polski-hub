@@ -1,0 +1,11 @@
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
+
+// Detects the preferred language (cookie → Accept-Language) and redirects
+// "/" → "/en" | "/ru" | "/tr".
+export default createMiddleware(routing);
+
+export const config = {
+  // Skip API routes, Next internals and static files (anything with a dot).
+  matcher: '/((?!api|_next|_vercel|.*\\..*).*)',
+};

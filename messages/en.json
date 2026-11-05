@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "Polski Hub — learn Polish through grammar in context",
+    "description": "Polish cases, verb government, aspect pairs and thematic vocabulary explained for English, Russian and Turkish speakers."
+  },
+  "nav": {
+    "home": "Home",
+    "cases": "Cases",
+    "verbs": "Verbs",
+    "vocabulary": "Vocabulary",
+    "language": "Interface language",
+    "settings": "Theme & Language",
+    "theme": "Appearance",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "home": {
+    "title": "Learn Polish the way your language thinks",
+    "subtitle": "Every explanation compares Polish with English: where it works the same, where it doesn't, and which mistakes English speakers usually make.",
+    "start": "Open",
+    "cases": { "title": "Cases & Grammar Hub", "desc": "All 7 cases, declension endings by gender, and real-world constructions." },
+    "verbs": { "title": "Verbs in context", "desc": "Case government, aspect pairs, conjugation and real-life examples." },
+    "vocabulary": { "title": "Thematic vocabulary", "desc": "High-frequency words by topic, with flashcards and audio." }
+  },
+  "cases": {
+    "title": "Cases & Grammar Hub",
+    "intro": "Select a case to explore how nouns and adjectives change across masculine, feminine, neuter, and plural, which prepositions trigger it, and the most common phrases.",
+    "yourLanguage": "Compared with English",
+    "whenToUse": "When to use this case",
+    "prepositions": "Key prepositions",
+    "noPrepositions": "Used without prepositions",
+    "declensionTitle": "How endings change (Nominative → Target Case)",
+    "genderCol": "Gender / Number",
+    "nomCol": "Nominative (Mianownik)",
+    "targetCol": "In this case",
+    "endingsCol": "Ending rule & example",
+    "alternations": "Stem consonant changes",
+    "commonPhrases": "Most common phrases & constructions",
+    "exploreVerbs": "Explore verbs in the Verb Dictionary →"
+  },
+  "verbs": {
+    "title": "Verbs in context",
+    "intro": "Click any verb to see how it conjugates, how it changes nouns in its governed case (masculine, feminine, neuter, plural), and its most common phrases.",
+    "searchPlaceholder": "Search: szukać, szukac, wait…",
+    "allCases": "All cases",
+    "noResults": "No verbs found.",
+    "count": "{count, plural, one {# verb} other {# verbs}}"
+  },
+  "verb": {
+    "back": "All verbs",
+    "imperfective": "Imperfective",
+    "perfective": "Perfective",
+    "noPerfective": "No perfective partner",
+    "government": "Case government (rekcja)",
+    "governmentHint": "Hover a case to highlight it in the examples. Click a connection to switch patterns.",
+    "nativeLens": "Compared with English",
+    "level": {
+      "match": "Same as English",
+      "partial": "Partly different",
+      "mismatch": "Different — watch out"
+    },
+    "examples": "Examples",
+    "negate": "Negate (nie)",
+    "negationShift": "Genitive of negation: after “nie” the direct object switches from Accusative to Genitive.",
+    "negationUnchanged": "Negation does not change the case here.",
+    "translations": "Translations",
+    "conjugation": "Conjugation",
+    "present": "Present",
+    "future": "Future",
+    "past": "Past",
+    "imperative": "Imperative",
+    "masculine": "masc. / virile",
+    "feminine": "fem. / non-virile",
+    "aspectUsage": "Aspect in context",
+    "listen": "Listen",
+    "otherCase": "not governed by this verb",
+    "caseGrammarTitle": "How nouns & adjectives change in this case",
+    "caseGrammarSub": "From Nominative (Mianownik) into {caseName} across genders",
+    "openFullCaseGuide": "Full {caseName} grammar guide →",
+    "verbConstructionsTitle": "How this verb changes & key constructions",
+    "constructions": {
+      "now": "Right now / regularly (1sg)",
+      "pastM": "Past (masculine — ja)",
+      "pastF": "Past (feminine — ja)",
+      "future": "Future / result (1sg)",
+      "imperative": "Imperative (request)",
+      "modal": "With modal (chcę / muszę / można)"
+    },
+    "casePhrasesTitle": "Frequent phrases in {caseName}"
+  },
+  "vocab": {
+    "title": "Thematic vocabulary",
+    "intro": "High-frequency words grouped by topic. Flip a card to see the translation and an example.",
+    "topics": { "daily": "Daily life", "university": "University", "work": "Work", "travel": "Travel" },
+    "cards": "Flashcards",
+    "list": "List",
+    "flip": "Tap to flip",
+    "prev": "Previous",
+    "next": "Next",
+    "falseFriend": "False friend"
+  }
+}

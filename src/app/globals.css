@@ -1,0 +1,126 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800;
+}
+
+/* ==========================================================================
+   Dark theme overrides (triggered by html.dark)
+   Preserves all 7 case colors while turning surfaces and typography dark.
+   ========================================================================== */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #0b1120;
+  color: #e2e8f0;
+}
+
+/* Surfaces */
+html.dark .bg-white {
+  background-color: #111827 !important;
+}
+
+html.dark .bg-white\/85 {
+  background-color: rgba(17, 24, 39, 0.88) !important;
+}
+
+html.dark .bg-white\/70 {
+  background-color: rgba(17, 24, 39, 0.72) !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #1f2937 !important;
+}
+
+/* Hover states on surfaces */
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-slate-50\/70:hover,
+html.dark .hover\:bg-slate-100:hover {
+  background-color: #273549 !important;
+}
+
+/* Typography */
+html.dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-800 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-400 {
+  color: #64748b !important;
+}
+
+/* Borders & Rings */
+html.dark .border-slate-200,
+html.dark .border-slate-100 {
+  border-color: #1e293b !important;
+}
+
+html.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #1e293b !important;
+}
+
+html.dark .ring-slate-200,
+html.dark .ring-slate-200\/80,
+html.dark .ring-slate-200\/70,
+html.dark .ring-slate-200\/60,
+html.dark .ring-slate-300 {
+  --tw-ring-color: #283548 !important;
+}
+
+/* Active dark pills (e.g. selected filter chip or verb node) */
+html.dark .bg-slate-900 {
+  background-color: #334155 !important;
+}
+
+/* Case highlight backgrounds inside dark sentences */
+html.dark .bg-amber-200 {
+  background-color: rgba(245, 158, 11, 0.28) !important;
+}
+html.dark .bg-emerald-200 {
+  background-color: rgba(16, 185, 129, 0.28) !important;
+}
+html.dark .bg-sky-200 {
+  background-color: rgba(14, 165, 233, 0.28) !important;
+}
+html.dark .bg-violet-200 {
+  background-color: rgba(139, 92, 246, 0.28) !important;
+}
+html.dark .bg-rose-200 {
+  background-color: rgba(244, 63, 94, 0.28) !important;
+}
+html.dark .bg-teal-200 {
+  background-color: rgba(20, 184, 166, 0.28) !important;
+}
+html.dark .bg-slate-200 {
+  background-color: rgba(148, 163, 184, 0.25) !important;
+}
