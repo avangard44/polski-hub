@@ -46,10 +46,10 @@ export function VerbSearch({ verbs }: { verbs: VerbSummary[] }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t('searchPlaceholder')}
-        className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3 text-lg shadow-sm outline-none focus:border-red-400 focus:ring-4 focus:ring-red-100"
+        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base shadow-sm outline-none focus:border-red-400 focus:ring-4 focus:ring-red-100 sm:px-5 sm:text-lg"
       />
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="-mx-3 mt-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
         <FilterChip active={!caseFilter} onClick={() => setCaseFilter(null)}>
           {t('allCases')}
         </FilterChip>
@@ -109,7 +109,7 @@ function FilterChip({ active, onClick, children }: { active: boolean; onClick: (
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`inline-flex items-center rounded-full px-3 py-1 text-sm ring-1 transition ${
+      className={`inline-flex shrink-0 items-center rounded-full px-3 py-1.5 text-sm ring-1 transition sm:py-1 ${
         active ? 'bg-slate-900 text-white ring-slate-900' : 'bg-white text-slate-600 ring-slate-200 hover:ring-slate-400'
       }`}
     >

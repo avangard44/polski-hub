@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -7,6 +7,12 @@ import { routing } from '@/i18n/routing';
 import '../globals.css';
 
 type Props = { children: React.ReactNode; params: Promise<{ locale: string }> };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 // Pre-render every page for every locale (SSG → fast + SEO-friendly).
 export function generateStaticParams() {
@@ -45,7 +51,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="min-h-screen transition-colors">
         <NextIntlClientProvider>
           <SiteHeader />
-          <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+          <main className="mx-auto max-w-6xl px-3 pb-24 pt-5 sm:px-4 sm:py-8">{children}</main>
         </NextIntlClientProvider>
       </body>
     </html>

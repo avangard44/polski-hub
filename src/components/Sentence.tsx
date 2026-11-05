@@ -63,7 +63,7 @@ export function Sentence({ segments, locale, activePatternId, hoverCase, onHover
             {seg.text}
             <span
               role="tooltip"
-              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs font-normal leading-snug text-white no-underline opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus:opacity-100"
+              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[82vw] -translate-x-1/2 whitespace-normal rounded-lg bg-slate-900 px-2.5 py-1.5 text-center text-xs font-normal leading-snug text-white no-underline opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus:opacity-100 sm:max-w-xs"
             >
               {seg.lemma && (
                 <span className="block">

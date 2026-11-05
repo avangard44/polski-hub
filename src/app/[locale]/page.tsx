@@ -16,10 +16,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <div>
-      <section className="py-10 text-center">
-        <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">{t('title')}</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-500">{t('subtitle')}</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2" aria-hidden>
+      <section className="py-6 text-center sm:py-10">
+        <h1 className="mx-auto max-w-3xl text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl">{t('title')}</h1>
+        <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500 sm:mt-4 sm:text-lg">{t('subtitle')}</p>
+        <div className="mt-5 flex flex-wrap justify-center gap-1.5 sm:mt-6 sm:gap-2" aria-hidden>
           {CASE_ORDER.map((c) => (
             <span key={c} className={`rounded-full px-3 py-1 text-xs font-semibold ${CASE_META[c].ui.badge}`}>
               {CASE_META[c].pl}

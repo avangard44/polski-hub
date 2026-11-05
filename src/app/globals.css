@@ -31,8 +31,9 @@ html.dark .bg-white {
   background-color: #111827 !important;
 }
 
-html.dark .bg-white\/85 {
-  background-color: rgba(17, 24, 39, 0.88) !important;
+html.dark .bg-white\/85,
+html.dark .bg-white\/95 {
+  background-color: rgba(17, 24, 39, 0.92) !important;
 }
 
 html.dark .bg-white\/70 {
