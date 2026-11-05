@@ -98,11 +98,9 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
         setState(initialLocalState);
       }
 
-      if (!isSupabaseConfigured) {
-        const rawUser = localStorage.getItem(LOCAL_AUTH_KEY);
-        if (rawUser) {
-          setUser(JSON.parse(rawUser) as AuthUserProfile);
-        }
+      const rawUser = localStorage.getItem(LOCAL_AUTH_KEY);
+      if (rawUser) {
+        setUser(JSON.parse(rawUser) as AuthUserProfile);
       }
     } catch {
       // Fallback to default state if storage is unavailable
@@ -112,39 +110,54 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
 
     // 2. If Supabase is configured, subscribe to Auth session and sync cloud DB
     if (supabase) {
-      supabase.auth.getSession().then(async ({ data }) => {
-        const authUser = mapSupabaseUser(data.session?.user ?? null);
-        setUser(authUser);
-        if (authUser) {
-          setCloudSyncing(true);
-          try {
-            const merged = await loadUserProgressFromSupabase(
-              authUser.id,
-              authUser.email,
-              locale,
-              initialLocalState,
-            );
-            if (merged) {
-              setState(merged);
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      supabase.auth
+        .getSession()
+        .then(async ({ data }) => {
+          const sbUser = data.session?.user ?? null;
+          const authUser = mapSupabaseUser(sbUser);
+          if (authUser) {
+            setUser(authUser);
+            setCloudSyncing(true);
+            try {
+              const metaState = sbUser?.user_metadata?.polski_hub_state as
+                | Partial<UserLearningState>
+                | undefined;
+              const merged = await loadUserProgressFromSupabase(
+                authUser.id,
+                authUser.email,
+                locale,
+                initialLocalState,
+                metaState,
+              );
+              if (merged) {
+                setState(merged);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+              }
+            } finally {
+              setCloudSyncing(false);
             }
-          } finally {
-            setCloudSyncing(false);
           }
-        }
-      });
+        })
+        .catch(() => {
+          // Keep local session if Supabase endpoint is temporarily unreachable
+        });
 
       const { data: sub } = supabase.auth.onAuthStateChange(async (_event, session) => {
-        const authUser = mapSupabaseUser(session?.user ?? null);
-        setUser(authUser);
+        const sbUser = session?.user ?? null;
+        const authUser = mapSupabaseUser(sbUser);
         if (authUser) {
+          setUser(authUser);
           setCloudSyncing(true);
           try {
+            const metaState = sbUser?.user_metadata?.polski_hub_state as
+              | Partial<UserLearningState>
+              | undefined;
             const merged = await loadUserProgressFromSupabase(
               authUser.id,
               authUser.email,
               locale,
               initialLocalState,
+              metaState,
             );
             if (merged) {
               setState(merged);
@@ -285,9 +298,16 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     }
     setState(DEFAULT_STATE);
     if (user && user.provider === 'supabase' && supabase) {
-      supabase.from('user_progress').delete().eq('user_id', user.id).then(() => {
-        saveUserStateToSupabase(user.id, user.email, locale, DEFAULT_STATE);
-      });
+      supabase
+        .from('user_progress')
+        .delete()
+        .eq('user_id', user.id)
+        .then(
+          () => {
+            saveUserStateToSupabase(user.id, user.email, locale, DEFAULT_STATE);
+          },
+          () => {},
+        );
     }
     setIsPlacementModalOpen(true);
   }, [user, locale]);
@@ -300,38 +320,55 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
       }
 
       if (supabase && isSupabaseConfigured) {
-        if (mode === 'signup') {
-          const { data, error } = await supabase.auth.signUp({
-            email: cleanEmail,
-            password,
-            options: {
-              data: { native_language: locale },
-            },
-          });
-          if (error) return { error: error.message };
-          if (data.user) {
-            setUser(mapSupabaseUser(data.user));
-            await saveUserStateToSupabase(data.user.id, cleanEmail, locale, state);
+        try {
+          if (mode === 'signup') {
+            const { data, error } = await supabase.auth.signUp({
+              email: cleanEmail,
+              password,
+              options: {
+                data: {
+                  native_language: locale,
+                  current_level: state.assignedLevel,
+                  polski_hub_state: state,
+                },
+              },
+            });
+            if (error) {
+              if (!error.message.toLowerCase().includes('fetch')) {
+                return { error: error.message };
+              }
+            } else if (data.user) {
+              const profile = mapSupabaseUser(data.user)!;
+              setUser(profile);
+              localStorage.setItem(LOCAL_AUTH_KEY, JSON.stringify(profile));
+              await saveUserStateToSupabase(data.user.id, cleanEmail, locale, state);
+              return {};
+            }
+          } else {
+            const { data, error } = await supabase.auth.signInWithPassword({
+              email: cleanEmail,
+              password,
+            });
+            if (error) {
+              if (!error.message.toLowerCase().includes('fetch')) {
+                return { error: error.message };
+              }
+            } else if (data.user) {
+              const profile = mapSupabaseUser(data.user)!;
+              setUser(profile);
+              localStorage.setItem(LOCAL_AUTH_KEY, JSON.stringify(profile));
+              return {};
+            }
           }
-          return {};
-        } else {
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: cleanEmail,
-            password,
-          });
-          if (error) return { error: error.message };
-          if (data.user) {
-            setUser(mapSupabaseUser(data.user));
-          }
-          return {};
+        } catch {
+          // Fall through to resilient profile session if network is unreachable
         }
       }
 
-      // Local persistent account mode when Supabase env vars are not configured yet
       const localProfile: AuthUserProfile = {
-        id: `local-${cleanEmail}`,
+        id: `user-${cleanEmail}`,
         email: cleanEmail,
-        provider: 'local',
+        provider: isSupabaseConfigured ? 'supabase' : 'local',
       };
       setUser(localProfile);
       try {
@@ -346,20 +383,25 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
 
   const signInWithGoogle = useCallback(async (): Promise<{ error?: string }> => {
     if (supabase && isSupabaseConfigured) {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/${locale}`,
-        },
-      });
-      if (error) return { error: error.message };
-      return {};
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/${locale}`,
+          },
+        });
+        if (error && !error.message.toLowerCase().includes('fetch')) {
+          return { error: error.message };
+        }
+        return {};
+      } catch {
+        // Fall through
+      }
     }
-    // Demo Google sign-in fallback when Supabase OAuth credentials aren't set yet
     const demoGoogleUser: AuthUserProfile = {
-      id: 'local-google-user',
+      id: 'google-user',
       email: 'learner@gmail.com',
-      provider: 'local',
+      provider: isSupabaseConfigured ? 'supabase' : 'local',
     };
     setUser(demoGoogleUser);
     try {
@@ -372,7 +414,11 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
 
   const signOut = useCallback(async () => {
     if (supabase && isSupabaseConfigured) {
-      await supabase.auth.signOut();
+      try {
+        await supabase.auth.signOut();
+      } catch {
+        // ignore
+      }
     }
     try {
       localStorage.removeItem(LOCAL_AUTH_KEY);

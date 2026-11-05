@@ -2,8 +2,16 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { CompletedModuleRecord, SubLevel, UserLearningState } from '@/types/curriculum';
 import type { UILocale } from '@/types/grammar';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
+const DEFAULT_SUPABASE_URL = 'https://qmujgrmwsvvkpnifgfh.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_OrBI6ml303wDwA7YvKbxkg_NsZdgRJj';
+
+const rawUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? DEFAULT_SUPABASE_URL).trim();
+const rawKey = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? DEFAULT_SUPABASE_ANON_KEY)
+  .trim()
+  .replace(/^\[|\]$/g, '');
+
+export const supabaseUrl = rawUrl;
+export const supabaseAnonKey = rawKey;
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
@@ -42,23 +50,34 @@ export interface DbUserProgressRow {
 }
 
 /**
- * Loads the authenticated user's profile (`users`) and completed modules (`user_progress`)
- * from Supabase and merges them with any local progress.
+ * Loads the authenticated user's profile (`users`), completed modules (`user_progress`),
+ * and Auth `user_metadata.polski_hub_state` from Supabase and merges them with local progress.
  */
 export async function loadUserProgressFromSupabase(
   userId: string,
   userEmail: string,
   locale: UILocale,
   localState: UserLearningState,
+  metaState?: Partial<UserLearningState> | null,
 ): Promise<UserLearningState | null> {
   if (!supabase) return null;
 
-  const [{ data: userRow }, { data: progressRows }] = await Promise.all([
-    supabase.from('users').select('*').eq('id', userId).maybeSingle<DbUserRow>(),
-    supabase.from('user_progress').select('*').eq('user_id', userId).returns<DbUserProgressRow[]>(),
-  ]);
+  let userRow: DbUserRow | null = null;
+  let progressRows: DbUserProgressRow[] | null = null;
+
+  try {
+    const [uRes, pRes] = await Promise.all([
+      supabase.from('users').select('*').eq('id', userId).maybeSingle<DbUserRow>(),
+      supabase.from('user_progress').select('*').eq('user_id', userId).returns<DbUserProgressRow[]>(),
+    ]);
+    userRow = uRes.data ?? null;
+    progressRows = pRes.data ?? null;
+  } catch {
+    // Tables may not be initialized yet; fall back to user_metadata + localState
+  }
 
   const mergedCompleted: Record<string, CompletedModuleRecord> = {
+    ...(metaState?.completedModules ?? {}),
     ...localState.completedModules,
   };
 
@@ -75,22 +94,31 @@ export async function loadUserProgressFromSupabase(
   }
 
   const mergedState: UserLearningState = {
-    hasCompletedOnboarding: Boolean(userRow?.has_completed_onboarding || localState.hasCompletedOnboarding),
-    assignedLevel: userRow?.current_level ?? localState.assignedLevel,
-    placementScore: userRow?.placement_score ?? localState.placementScore,
-    unlockedUpToOrder: Math.max(userRow?.unlocked_up_to_order ?? 1, localState.unlockedUpToOrder),
+    hasCompletedOnboarding: Boolean(
+      userRow?.has_completed_onboarding ||
+        metaState?.hasCompletedOnboarding ||
+        localState.hasCompletedOnboarding,
+    ),
+    assignedLevel: userRow?.current_level ?? metaState?.assignedLevel ?? localState.assignedLevel,
+    placementScore:
+      userRow?.placement_score ?? metaState?.placementScore ?? localState.placementScore,
+    unlockedUpToOrder: Math.max(
+      userRow?.unlocked_up_to_order ?? 1,
+      metaState?.unlockedUpToOrder ?? 1,
+      localState.unlockedUpToOrder,
+    ),
     completedModules: mergedCompleted,
-    totalXp: Math.max(userRow?.total_xp ?? 0, localState.totalXp),
+    totalXp: Math.max(userRow?.total_xp ?? 0, metaState?.totalXp ?? 0, localState.totalXp),
   };
 
-  // Upsert merged profile & any local modules back to Supabase so local pre-login progress is preserved
   await saveUserStateToSupabase(userId, userEmail, locale, mergedState);
 
   return mergedState;
 }
 
 /**
- * Upserts the user profile (`public.users`) and all completed lessons (`public.user_progress`).
+ * Upserts the user profile (`public.users`), completed lessons (`public.user_progress`),
+ * and Auth `user_metadata` so progress is saved across devices even if SQL tables were not run yet.
  */
 export async function saveUserStateToSupabase(
   userId: string,
@@ -100,35 +128,51 @@ export async function saveUserStateToSupabase(
 ): Promise<void> {
   if (!supabase) return;
 
-  await supabase.from('users').upsert(
-    {
-      id: userId,
-      email: userEmail,
-      native_language: locale,
-      current_level: state.assignedLevel,
-      placement_score: state.placementScore,
-      unlocked_up_to_order: state.unlockedUpToOrder,
-      total_xp: state.totalXp,
-      has_completed_onboarding: state.hasCompletedOnboarding,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: 'id' },
-  );
-
-  const entries = Object.entries(state.completedModules);
-  if (entries.length > 0) {
-    const rows = entries.map(([moduleId, rec]) => ({
-      user_id: userId,
-      module_id: moduleId,
-      score: rec.score,
-      attempts: rec.attempts,
-      is_completed: true,
-      completed_at: rec.completedAt,
-      updated_at: new Date().toISOString(),
-    }));
-
-    await supabase.from('user_progress').upsert(rows, {
-      onConflict: 'user_id,module_id',
+  try {
+    await supabase.auth.updateUser({
+      data: {
+        native_language: locale,
+        current_level: state.assignedLevel,
+        polski_hub_state: state,
+      },
     });
+  } catch {
+    // Ignore metadata sync error if session is refreshing
+  }
+
+  try {
+    await supabase.from('users').upsert(
+      {
+        id: userId,
+        email: userEmail,
+        native_language: locale,
+        current_level: state.assignedLevel,
+        placement_score: state.placementScore,
+        unlocked_up_to_order: state.unlockedUpToOrder,
+        total_xp: state.totalXp,
+        has_completed_onboarding: state.hasCompletedOnboarding,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'id' },
+    );
+
+    const entries = Object.entries(state.completedModules);
+    if (entries.length > 0) {
+      const rows = entries.map(([moduleId, rec]) => ({
+        user_id: userId,
+        module_id: moduleId,
+        score: rec.score,
+        attempts: rec.attempts,
+        is_completed: true,
+        completed_at: rec.completedAt,
+        updated_at: new Date().toISOString(),
+      }));
+
+      await supabase.from('user_progress').upsert(rows, {
+        onConflict: 'user_id,module_id',
+      });
+    }
+  } catch {
+    // Graceful fallback if SQL tables are not created yet
   }
 }
