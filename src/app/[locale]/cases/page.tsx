@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { CaseGrammarHub } from '@/components/CaseGrammarHub';
+import { LibrarySubNav } from '@/components/LibrarySubNav';
 import type { UILocale } from '@/types/grammar';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -18,6 +19,7 @@ export default async function CasesPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-6xl">
+      <LibrarySubNav />
       <h1 className="text-3xl font-bold text-slate-900">{t('title')}</h1>
       <p className="mb-6 mt-2 max-w-3xl text-slate-500">{t('intro')}</p>
       <CaseGrammarHub />

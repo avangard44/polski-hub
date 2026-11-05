@@ -1,16 +1,24 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useLearningProgress } from '@/context/LearningProgressContext';
 import { Link, usePathname } from '@/i18n/navigation';
 
 export function MobileBottomNav() {
   const t = useTranslations('nav');
   const pathname = usePathname();
+  const { state, hydrated } = useLearningProgress();
+
+  const isLibraryActive =
+    pathname.startsWith('/library') ||
+    pathname.startsWith('/cases') ||
+    pathname.startsWith('/verbs') ||
+    pathname.startsWith('/vocabulary');
 
   const items = [
     {
-      href: '/learn' as const,
-      label: t('roadmap'),
+      href: '/' as const,
+      label: t('myPath'),
       active: pathname === '/' || pathname.startsWith('/learn'),
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -19,9 +27,9 @@ export function MobileBottomNav() {
       ),
     },
     {
-      href: '/cases' as const,
-      label: t('cases'),
-      active: pathname.startsWith('/cases'),
+      href: '/library' as const,
+      label: t('library'),
+      active: isLibraryActive,
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <path d="M4 6h16M4 12h16M4 18h10" strokeLinecap="round" />
@@ -29,23 +37,13 @@ export function MobileBottomNav() {
       ),
     },
     {
-      href: '/verbs' as const,
-      label: t('verbs'),
-      active: pathname.startsWith('/verbs'),
+      href: '/profile' as const,
+      label: hydrated ? `${t('profile')} (${state.assignedLevel})` : t('profile'),
+      active: pathname.startsWith('/profile') || pathname.startsWith('/auth'),
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      ),
-    },
-    {
-      href: '/vocabulary' as const,
-      label: t('vocabulary'),
-      active: pathname.startsWith('/vocabulary'),
-      icon: (
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <rect x="3" y="4" width="18" height="16" rx="2" />
-          <path d="M7 8h10M7 12h6" strokeLinecap="round" />
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c1.5-4 14.5-4 16 0" strokeLinecap="round" />
         </svg>
       ),
     },
@@ -56,7 +54,7 @@ export function MobileBottomNav() {
       aria-label="Mobile navigation"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur sm:hidden"
     >
-      <div className="mx-auto grid max-w-md grid-cols-4 px-2 py-1.5">
+      <div className="mx-auto grid max-w-md grid-cols-3 px-2 py-1.5">
         {items.map((item) => (
           <Link
             key={item.href}

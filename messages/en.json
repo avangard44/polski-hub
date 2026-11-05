@@ -5,7 +5,10 @@
   },
   "nav": {
     "home": "Home",
-    "roadmap": "Learning Path",
+    "myPath": "My Path",
+    "roadmap": "My Path",
+    "library": "Reference Library",
+    "profile": "Profile",
     "cases": "Cases",
     "verbs": "Verbs",
     "vocabulary": "Vocabulary",
@@ -18,11 +21,79 @@
   "home": {
     "title": "Learn Polish the way your language thinks",
     "subtitle": "Every explanation compares Polish with English: where it works the same, where it doesn't, and which mistakes English speakers usually make.",
-    "referenceTitle": "Grammar & Vocabulary Reference Hubs",
+    "referenceTitle": "Reference Library (Cases, 156 Verbs & Vocabulary)",
     "start": "Open",
     "cases": { "title": "Cases & Grammar Hub", "desc": "All 7 cases, declension endings by gender, and real-world constructions." },
-    "verbs": { "title": "Verbs in context (156 verbs)", "desc": "Case government, aspect pairs, conjugation and real-life examples." },
-    "vocabulary": { "title": "Thematic vocabulary", "desc": "High-frequency words by topic, with flashcards and audio." }
+    "verbs": { "title": "Verb Government (Rekcja) Dictionary", "desc": "156 verbs with case government, aspect pairs, conjugation and examples." },
+    "vocabulary": { "title": "Thematic Vocabulary", "desc": "High-frequency words by topic, with flashcards and audio." }
+  },
+  "library": {
+    "sectionBadge": "Reference Library",
+    "backToMyPath": "Back to My Path",
+    "overviewTab": "Overview",
+    "casesTab": "1. Cases & Grammar",
+    "verbsTab": "2. Verb Dictionary (156)",
+    "vocabTab": "3. Thematic Vocabulary",
+    "title": "Polish Reference Library",
+    "subtitle": "Your comprehensive grammar and vocabulary database: explore all 7 Polish cases with gender declension tables, 156 high-frequency verbs with case government (rekcja), and thematic flashcards.",
+    "casesCard": {
+      "title": "Cases & Grammar Rules",
+      "desc": "How nouns and adjectives change from Nominative across masculine, feminine, neuter and plural, stem consonant alternations, prepositions and frequent phrases.",
+      "cta": "Open Cases & Grammar Hub"
+    },
+    "verbsCard": {
+      "title": "Verb Government (Rekcja) Dictionary",
+      "desc": "156 essential Polish verbs with interactive case bridges, Genitive of negation toggles, aspect pairs (Niedokonany / Dokonany) and full conjugation.",
+      "cta": "Explore 156 Verbs"
+    },
+    "vocabCard": {
+      "title": "Thematic Vocabulary & Flashcards",
+      "desc": "High-frequency nouns grouped into Daily Life, University, Work and Travel, with audio pronunciation and false-friend alerts.",
+      "cta": "Practice Flashcards"
+    }
+  },
+  "auth": {
+    "cloudBadge": "Supabase Cloud Sync",
+    "localSyncBadge": "Cross-Session Account Sync",
+    "loginTitle": "Sign in to save your progress",
+    "signupTitle": "Create your Polski Hub account",
+    "subtitle": "Sync your CEFR level, completed modules, and placement test scores permanently across devices.",
+    "loginTab": "Log In",
+    "signupTab": "Sign Up",
+    "googleBtn": "Continue with Google",
+    "orEmail": "or with email",
+    "emailLabel": "Email address",
+    "passwordLabel": "Password (min. 6 characters)",
+    "loginSubmit": "Log In",
+    "signupSubmit": "Create Account",
+    "loginSuccess": "Signed in! Your learning progress is synced.",
+    "signupSuccess": "Account created! Your learning progress is synced."
+  },
+  "profile": {
+    "guestTitle": "Learner Profile (Guest)",
+    "guestSub": "Sign in below to sync your progress permanently across devices",
+    "syncedWithSupabase": "Synced permanently with Supabase Cloud DB",
+    "savedLocallyAccount": "Saved to your profile on this device",
+    "signOutBtn": "Sign Out",
+    "levelStat": "Current Level",
+    "xpStat": "Total XP",
+    "completedStat": "Completed",
+    "placementStat": "Placement Score",
+    "completedModulesTitle": "Completed Lessons",
+    "noModulesCompletedYet": "You haven’t completed any lessons yet. Start your first module on the Learning Path!",
+    "goToMyPathBtn": "Go to My Path",
+    "settingsTitle": "Settings & Preferences",
+    "nativeLanguageLabel": "Interface & Explanation Language (L1)",
+    "appearanceLabel": "Appearance Theme",
+    "lightMode": "Light Theme",
+    "darkMode": "Dark Theme",
+    "learningControlsLabel": "Curriculum & Level Assessment",
+    "retakePlacementBtn": "Retake Placement Test",
+    "resetProgressBtn": "Reset All Progress",
+    "dbConnectedTitle": "Supabase Database Connected",
+    "dbConnectedDesc": "Your users and user_progress records are automatically synced with PostgreSQL.",
+    "dbLocalFallbackTitle": "Offline-First Mode Active",
+    "dbLocalFallbackDesc": "Progress is saved in localStorage. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to enable cloud sync."
   },
   "roadmap": {
     "pathBadge": "Progressive Curriculum",
@@ -74,7 +145,7 @@
     "startMyPathBtn": "Start Learning at {level}"
   },
   "lesson": {
-    "backToRoadmap": "Learning Roadmap",
+    "backToRoadmap": "Back to My Path",
     "stepTheory": "Theory & Reading",
     "stepPractice": "Practice",
     "stepCompletion": "Summary",

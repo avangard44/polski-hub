@@ -1,17 +1,9 @@
-import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { DesktopNav } from './DesktopNav';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { MobileBottomNav } from './MobileBottomNav';
 
 export async function SiteHeader() {
-  const t = await getTranslations('nav');
-  const links = [
-    { href: '/learn', label: t('roadmap') },
-    { href: '/cases', label: t('cases') },
-    { href: '/verbs', label: t('verbs') },
-    { href: '/vocabulary', label: t('vocabulary') },
-  ] as const;
-
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
@@ -23,17 +15,9 @@ export async function SiteHeader() {
             </span>
             <span className="truncate">Polski Hub</span>
           </Link>
-          <nav className="hidden items-center gap-1 text-sm sm:flex">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="rounded-lg px-3 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+
+          <DesktopNav />
+
           <LocaleSwitcher />
         </div>
       </header>

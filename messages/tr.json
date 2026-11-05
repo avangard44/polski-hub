@@ -5,7 +5,10 @@
   },
   "nav": {
     "home": "Ana sayfa",
-    "roadmap": "Yol Haritası",
+    "myPath": "Yol Haritam",
+    "roadmap": "Yol Haritam",
+    "library": "Kütüphane",
+    "profile": "Profil",
     "cases": "Hâller",
     "verbs": "Fiiller",
     "vocabulary": "Kelimeler",
@@ -18,11 +21,79 @@
   "home": {
     "title": "Lehçeyi kendi dilinizin mantığıyla öğrenin",
     "subtitle": "Her açıklama Lehçeyi Türkçeyle karşılaştırır: nerede aynı, nerede farklı ve Türkçe konuşanlar genellikle hangi hataları yapıyor.",
-    "referenceTitle": "Dilbilgisi ve Kelime Başvuru Rehberleri",
+    "referenceTitle": "Başvuru Kütüphanesi (Hâller, 156 Fiil ve Kelimeler)",
     "start": "Aç",
     "cases": { "title": "Hâller ve Dilbilgisi", "desc": "7 hâlin tamamı, cinsiyetlere göre ek değişimleri, edatlar ve en sık kalıplar." },
-    "verbs": { "title": "Bağlam içinde fiiller (156 fiil)", "desc": "Hâl yönetimi, görünüş çiftleri, çekimler ve gerçek örnekler." },
-    "vocabulary": { "title": "Konulara göre sık kelimeler", "desc": "Konulara göre en sık kelimeler: kartlar ve telaffuz." }
+    "verbs": { "title": "Fiil Yönetimi (Rekcja) Sözlüğü", "desc": "156 fiil: hâl yönetimi, görünüş çiftleri, çekimler ve gerçek örnekler." },
+    "vocabulary": { "title": "Konulara Göre Kelimeler", "desc": "Konulara göre en sık kelimeler: kartlar ve telaffuz." }
+  },
+  "library": {
+    "sectionBadge": "Başvuru Kütüphanesi",
+    "backToMyPath": "Yol Haritama Dön",
+    "overviewTab": "Genel Bakış",
+    "casesTab": "1. Hâller ve Kurallar",
+    "verbsTab": "2. Fiil Sözlüğü (156)",
+    "vocabTab": "3. Konu Kelimeleri",
+    "title": "Lehçe Başvuru Kütüphanesi",
+    "subtitle": "Kapsamlı dilbilgisi ve kelime veritabanınız: cinsiyetlere göre çekim tablolarıyla 7 Lehçe hâl, hâl yönetimiyle (rekcja) 156 yüksek frekanslı fiil ve konu kartları.",
+    "casesCard": {
+      "title": "Hâller ve Dilbilgisi Kuralları",
+      "desc": "İsim ve sıfatların Yalın hâlden eril, dişil, nötr ve çoğulda nasıl değiştiği, ünsüz değişimleri, edatlar ve sık kalıplar.",
+      "cta": "Hâller Rehberini Aç"
+    },
+    "verbsCard": {
+      "title": "Fiil Yönetimi (Rekcja) Sözlüğü",
+      "desc": "Etkileşimli hâl köprüleri, olumsuzluk genitifi, görünüş çiftleri (Niedokonany / Dokonany) ve tam çekimleriyle 156 temel fiil.",
+      "cta": "156 Fiili İncele"
+    },
+    "vocabCard": {
+      "title": "Tematik Kelimeler ve Kartlar",
+      "desc": "Günlük Hayat, Üniversite, İş ve Seyahat konularında sesli telaffuzlu ve yalancı eşdeğer uyarılı kelimeler.",
+      "cta": "Kelime Kartlarıyla Çalış"
+    }
+  },
+  "auth": {
+    "cloudBadge": "Supabase Bulut Senkronizasyonu",
+    "localSyncBadge": "Hesap Senkronizasyonu",
+    "loginTitle": "İlerlemenizi kaydetmek için giriş yapın",
+    "signupTitle": "Polski Hub hesabınızı oluşturun",
+    "subtitle": "CEFR seviyenizi, tamamladığınız dersleri ve test skorlarınızı tüm cihazlarınızda kalıcı olarak senkronize edin.",
+    "loginTab": "Giriş Yap",
+    "signupTab": "Kayıt Ol",
+    "googleBtn": "Google ile Devam Et",
+    "orEmail": "veya e-posta ile",
+    "emailLabel": "E-posta adresi",
+    "passwordLabel": "Şifre (en az 6 karakter)",
+    "loginSubmit": "Giriş Yap",
+    "signupSubmit": "Hesap Oluştur",
+    "loginSuccess": "Giriş yapıldı! İlerlemeniz senkronize edildi.",
+    "signupSuccess": "Hesap oluşturuldu! İlerlemeniz kaydedildi."
+  },
+  "profile": {
+    "guestTitle": "Öğrenci Profili (Misafir)",
+    "guestSub": "İlerlemenizi cihazlar arasında kalıcı olarak senkronize etmek için aşağıdan giriş yapın",
+    "syncedWithSupabase": "Supabase Bulut Veritabanı ile senkronize edildi",
+    "savedLocallyAccount": "Bu cihazdaki profilinize kaydedildi",
+    "signOutBtn": "Çıkış Yap",
+    "levelStat": "Mevcut Seviye",
+    "xpStat": "Toplam XP",
+    "completedStat": "Tamamlanan",
+    "placementStat": "Seviye Testi",
+    "completedModulesTitle": "Tamamlanan Dersler",
+    "noModulesCompletedYet": "Henüz hiçbir dersi tamamlamadınız. Öğrenme Yol Haritasında ilk modülünüze başlayın!",
+    "goToMyPathBtn": "Yol Haritama Git",
+    "settingsTitle": "Ayarlar ve Tercihler",
+    "nativeLanguageLabel": "Arayüz ve Açıklama Dili (Ana Dil)",
+    "appearanceLabel": "Görünüm Teması",
+    "lightMode": "Açık Tema",
+    "darkMode": "Koyu Tema",
+    "learningControlsLabel": "Müfredat ve Seviye Kontrolü",
+    "retakePlacementBtn": "Seviye Tespit Sınavını Tekrarla",
+    "resetProgressBtn": "Tüm İlerlemeyi Sıfırla",
+    "dbConnectedTitle": "Supabase Veritabanı Bağlı",
+    "dbConnectedDesc": "users ve user_progress tablolarınız PostgreSQL ile otomatik senkronize ediliyor.",
+    "dbLocalFallbackTitle": "Çevrimdışı Öncelikli Mod Aktif",
+    "dbLocalFallbackDesc": "İlerleme tarayıcıda kaydediliyor. Bulut senkronizasyonu için NEXT_PUBLIC_SUPABASE_URL ve NEXT_PUBLIC_SUPABASE_ANON_KEY ekleyin."
   },
   "roadmap": {
     "pathBadge": "Aşamalı Müfredat",
@@ -74,7 +145,7 @@
     "startMyPathBtn": "{level} Seviyesinden Öğrenmeye Başla"
   },
   "lesson": {
-    "backToRoadmap": "Yol Haritasına Dön",
+    "backToRoadmap": "Yol Haritama Dön",
     "stepTheory": "Teori ve Okuma",
     "stepPractice": "Alıştırmalar",
     "stepCompletion": "Özet",

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { LibrarySubNav } from '@/components/LibrarySubNav';
 import { VerbSearch, type VerbSummary } from '@/components/VerbSearch';
 import { pairLabel, VERBS } from '@/data/verbs';
 import type { UILocale } from '@/types/grammar';
@@ -28,6 +29,7 @@ export default async function VerbsPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-4xl">
+      <LibrarySubNav />
       <h1 className="text-3xl font-bold text-slate-900">{t('title')}</h1>
       <p className="mb-6 mt-2 text-slate-500">{t('intro')}</p>
       <VerbSearch verbs={summaries} />
