@@ -9,6 +9,8 @@ import {
   loadUserProgressFromSupabase,
   saveUserStateToSupabase,
   supabase,
+  supabaseAnonKey,
+  supabaseUrl,
 } from '@/lib/supabase';
 import type {
   CurriculumModule,
@@ -385,23 +387,34 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
   const signInWithGoogle = useCallback(async (): Promise<{ error?: string }> => {
     if (supabase && isSupabaseConfigured) {
       try {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: `${window.location.origin}/${locale}`,
-          },
+        // Check if Google OAuth provider is enabled in Supabase before redirecting the browser
+        const settingsRes = await fetch(`${supabaseUrl}/auth/v1/settings`, {
+          headers: { apikey: supabaseAnonKey },
         });
-        if (error && !error.message.toLowerCase().includes('fetch')) {
-          return { error: error.message };
+        if (settingsRes.ok) {
+          const settings = (await settingsRes.json()) as {
+            external?: { google?: boolean };
+          };
+          if (settings?.external?.google) {
+            const { error } = await supabase.auth.signInWithOAuth({
+              provider: 'google',
+              options: {
+                redirectTo: `${window.location.origin}/${locale}`,
+              },
+            });
+            if (error && !error.message.toLowerCase().includes('fetch')) {
+              return { error: error.message };
+            }
+            return {};
+          }
         }
-        return {};
       } catch {
-        // Fall through
+        // Fall through if settings check fails
       }
     }
     const demoGoogleUser: AuthUserProfile = {
       id: 'google-user',
-      email: 'learner@gmail.com',
+      email: 'google.learner@polski-hub.app',
       provider: isSupabaseConfigured ? 'supabase' : 'local',
     };
     setUser(demoGoogleUser);

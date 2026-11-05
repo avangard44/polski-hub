@@ -44,8 +44,11 @@ export function AuthForm({ redirectOnSuccess = false }: { redirectOnSuccess?: bo
       const res = await signInWithGoogle();
       if (res.error) {
         setError(res.error);
-      } else if (redirectOnSuccess && !isSupabaseReady) {
-        router.push('/');
+      } else {
+        setSuccessMsg(t('loginSuccess'));
+        if (redirectOnSuccess) {
+          router.push('/');
+        }
       }
     } finally {
       setLoading(false);
